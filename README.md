@@ -69,88 +69,24 @@ git clone https://github.com/yhenon/pytorch-retinanet.git
 
 ### Structure
 
-* `example/`: contains inference outputs
-* `model/`: contains model .pt file
-* `resources/`: contains repo home image
-* `source/`:
-    * `mc_autoencoder.py`: model structure (structure, forward pass...)
-    * `model.py`: model methods (train, eval, save...)
-    * `train.py`: training script
-    * `inference.py`: eval and inference script
-    * `app.py`: project GUI
-* `utils/`:
-    * `device.py`: fast script for device availability (cpu or gpu -- just run `device.py`)
+* `dataset/`: contains datasets files
+* `pytorch-retinanet/`: contains scripts for retinanet training/evaluation
+* `annots_to_csv.py`: script for datasets conversion to csv
 
 ### Example
 
-1. Run the `train.py` script. Feel free to edit parameters like `channel sizes`, `epochs` or `learning rate`.
-
-```python
-import torch.nn
-from torchvision.transforms import ToTensor
-
-from source.model import Model
-
-# Load data & dataloader
-train_data, test_data, train_dataloader, test_dataloader = Model.load_mnist(transform=ToTensor(), batch_size=1)
-
-# Load model
-model = Model(device='cuda', img_chan_size=100, global_chan_size=50)
-print(model.model)
-
-# Loss & Optim
-loss = torch.nn.MSELoss()
-optimizer = torch.optim.Adam(model.model.parameters(), lr=1e-3)
-
-epoch = 15
-mask_prob = 25
-
-# Training model
-for _ in range(0, epoch):
-    model.train(dataloader=train_dataloader, loss=loss, optimizer=optimizer, mask_prob=mask_prob, log_iter=60000)
-    model.eval(dataloader=test_dataloader, loss=loss)
-    model.eval(dataloader=test_dataloader, loss=loss, mask=True)
-    mask_prob += 25 if mask_prob < 100 else 0
-    print(f'Mask probability is now {mask_prob}%. ')
-
-# Save model
-model.save('model/model.pt')
-```
-
-2. Run the `inference.py` script (examples will be stored in example/ as .png)
-
-```python
-from torchvision.transforms import ToTensor
-
-from source.model import Model
-
-# Load data & dataloader
-train_data, test_data, train_dataloader, test_dataloader = Model.load_mnist(transform=ToTensor(), batch_size=1)
-
-# Load model
-model = Model(load_model='model/model.pt', img_chan_size=100, global_chan_size=50)
-print(f'Trainable parameters: {sum(p.numel() for p in model.model.parameters())}. ')
-
-# Quick inference
-model.infer(eval_data=test_data, random=True)
-```
-
-3. Examples of input/output/label
-
-input : ![](example/target1.png) \
-output : ![](example/output1.png) \
-label : 8
-
-4. Use the model with GUI
+1. Convert datasets to csv file using `annots_to_csv.py`
 
 ```shell
-cd source/
-streamlit run app.py
+python annots_to_csv.py --train_dataset path_to_train_dataset --valid_dataset path_to_valid_dataset --output_path path_of_outputs
 ```
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/DvdNss/mnist_encoder/main/resources/img.PNG" />
-</p>
+2. Train a given model using `pytorch-retinanet/train.py`
+
+```shell
+cd pytorch-retinanet
+python train.py --dataset csv --csv_train path_to_train_csv  --csv_classes path_to_class_csv  --csv_val path_to_valid_csv --depth depth_of_resnset --epochs number_of_epochs
+```
 
 <!-- CONTACT -->
 
