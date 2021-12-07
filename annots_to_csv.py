@@ -14,7 +14,7 @@ import xml.etree.ElementTree as ET
 import pandas as pd
 
 
-def xml_to_csv_and_ground_truth(path, output_path):
+def xml_to_csv_and_ground_truth(path: str, output_path: str, replace_image_path_by: str = ""):
     """
     Returns a csv format from a given xml format dataset path.
 
@@ -44,7 +44,12 @@ def xml_to_csv_and_ground_truth(path, output_path):
             if label not in labels:
                 labels.append(label)
 
-            value = (os.path.abspath(path + "/image/" + root.find('filename').text),
+            img_path = os.path.abspath(path + "/image/" + root.find('filename').text)
+            if replace_image_path_by != "":
+                img_path = replace_image_path_by + "\\dataset" + img_path.split('\\dataset')[1]
+                img_path = img_path.replace("/", "\\")
+
+            value = (img_path,
                      xmin,
                      ymin,
                      xmax,
@@ -86,7 +91,8 @@ def generate_csv_and_ground_truth(args=None):
 
     for set in [parser.train_dataset, parser.valid_dataset]:
         # Creates a dataframe from all xml files of a dataset
-        xmlDf = xml_to_csv_and_ground_truth(set, output_path=parser.output_path)
+        xmlDf = xml_to_csv_and_ground_truth(set, output_path=parser.output_path,
+                                            replace_image_path_by="/content/drive/MyDrive/AI-FaceMaskDetection")
 
         # Name csv file
         csvName = f"{parser.output_path}{'train' if 'train' in set else 'validation'}.csv"
