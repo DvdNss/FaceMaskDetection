@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 .idea/
 dataset/*.csv
-pytorch-retinanet/
+/pytorch-retinanet/*
 
 # C extensions
 *.so
@@ -130,3 +130,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/pytorch-retinanet/
+/pytorch-retinanet/resnet50-19c8e357.pth
+/pytorch-retinanet/resnet50-19c8e357.pth
