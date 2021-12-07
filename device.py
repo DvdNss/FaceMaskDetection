@@ -8,4 +8,4 @@ Created on 12/7/2021
 
 import torch
 
-print(torch.cuda.is_available())
+print(f"GPU ENABLED: {torch.cuda.is_available()}")
