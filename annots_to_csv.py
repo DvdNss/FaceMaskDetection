@@ -1,3 +1,11 @@
+# coding:utf-8
+"""
+Filename: annots_to_csv.py
+Author: @DvdNss
+
+Created on 12/7/2021
+"""
+
 import argparse
 import glob
 import os
