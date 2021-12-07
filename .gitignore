@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 .idea/
-dataset/
+dataset/*.csv
 pytorch-retinanet/
 
 # C extensions
