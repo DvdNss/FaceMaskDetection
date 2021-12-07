@@ -89,7 +89,7 @@ def generate_csv_and_ground_truth(args=None):
         xmlDf = xml_to_csv_and_ground_truth(set, output_path=parser.output_path)
 
         # Name csv file
-        csvName = parser.output_path + set.replace("dataset/", "").replace("/", "").replace("..", "") + ".csv"
+        csvName = f"{parser.output_path}{'train' if 'train' in set else 'validation'}.csv"
 
         # Convert dataframe to csv and save it
         xmlDf.to_csv(f"{csvName}", index=False, header=False)
