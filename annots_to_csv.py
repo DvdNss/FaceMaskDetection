@@ -47,7 +47,7 @@ def xml_to_csv_and_ground_truth(path: str, output_path: str, replace_image_path_
             img_path = os.path.abspath(path + "/image/" + root.find('filename').text)
             if replace_image_path_by != "":
                 img_path = replace_image_path_by + "\\dataset" + img_path.split('\\dataset')[1]
-                img_path = img_path.replace("/", "\\")
+                img_path = img_path.replace("\\", "/")
 
             value = (img_path,
                      xmin,
