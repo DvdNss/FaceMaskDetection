@@ -89,6 +89,12 @@ cd pytorch-retinanet
 python train.py --dataset csv --csv_train path_to_train_csv  --csv_classes path_to_class_csv  --csv_val path_to_valid_csv --depth depth_of_resnset --epochs number_of_epochs
 ```
 
+3. Visualize result using `pytorch-retinanet/visualize_single_image.py`
+```shell
+cd pytorch-retinanet
+python visualize_single_image.py --image_dir image_dir_path --model_path model_path --class_list labels_path
+```
+
 <!-- CONTACT -->
 
 ## Contact

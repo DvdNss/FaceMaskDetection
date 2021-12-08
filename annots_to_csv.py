@@ -85,6 +85,7 @@ def generate_csv_and_ground_truth(args=None):
     parser.add_argument('--train_dataset', help='Path to training dataset. ', default='dataset/train/')
     parser.add_argument('--valid_dataset', help='Path to validation dataset. ', default='dataset/validation/')
     parser.add_argument('--output_path', help='Output path for generated csv files. ', default='dataset/')
+    parser.add_argument('--replace_path_by', help='Replace image path by given path. ', default='')
 
     # Call parser args
     parser = parser.parse_args(args)
@@ -92,7 +93,7 @@ def generate_csv_and_ground_truth(args=None):
     for set in [parser.train_dataset, parser.valid_dataset]:
         # Creates a dataframe from all xml files of a dataset
         xmlDf = xml_to_csv_and_ground_truth(set, output_path=parser.output_path,
-                                            replace_image_path_by="/content/drive/MyDrive/AI-FaceMaskDetection")
+                                            replace_image_path_by=parser.replace_path_by)
 
         # Name csv file
         csvName = f"{parser.output_path}{'train' if 'train' in set else 'validation'}.csv"
