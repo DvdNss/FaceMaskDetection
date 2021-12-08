@@ -73,6 +73,7 @@ git clone https://github.com/yhenon/pytorch-retinanet.git
 * `pytorch-retinanet/`: contains scripts for retinanet training/evaluation
 * `annots_to_csv.py`: script for datasets conversion to csv
 * `device.py`: script for device detection (gpu or cpu)
+* `file_conversion.py`: script for png conversion to jpg
 
 ### Example
 
