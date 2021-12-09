@@ -16,6 +16,8 @@ with 3 labels:
 * _without_mask_
 * _mask_weared_incorrect_
 
+The dataset contains approximately 2500 hand-collected and hand-labelled images.
+
 [__Test it here!__]()
 
 <!-- TABLE OF CONTENTS -->
