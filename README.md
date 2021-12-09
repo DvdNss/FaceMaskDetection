@@ -78,13 +78,11 @@ git clone https://github.com/yhenon/pytorch-retinanet.git
 ### Example
 
 1. Convert datasets to csv file using `annots_to_csv.py`
-
 ```shell
 python annots_to_csv.py --train_dataset path_to_train_dataset --valid_dataset path_to_valid_dataset --output_path path_of_outputs
 ```
 
 2. Train a given model using `pytorch-retinanet/train.py`
-
 ```shell
 cd pytorch-retinanet
 python train.py --dataset csv --csv_train path_to_train_csv  --csv_classes path_to_class_csv  --csv_val path_to_valid_csv --depth depth_of_resnset --epochs number_of_epochs
