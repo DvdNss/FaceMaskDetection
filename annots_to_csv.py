@@ -14,7 +14,7 @@ import xml.etree.ElementTree as ET
 import pandas as pd
 
 
-def xml_to_csv_and_ground_truth(path: str, output_path: str, replace_image_path_by: str = ""):
+def xml_to_csv_and_ground_truth(path: str, output_path: str, path_to_dataset: str = ""):
     """
     Returns a csv format from a given xml format dataset path.
 
@@ -45,8 +45,8 @@ def xml_to_csv_and_ground_truth(path: str, output_path: str, replace_image_path_
                 labels.append(label)
 
             img_path = os.path.abspath(path + "/image/" + root.find('filename').text.replace(".png", ".jpg"))
-            if replace_image_path_by != "":
-                img_path = replace_image_path_by + "\\dataset" + img_path.split('\\dataset')[1]
+            if path_to_dataset != "":
+                img_path = path_to_dataset + "\\dataset" + img_path.split('\\dataset')[1]
                 img_path = img_path.replace("\\", "/")
 
             value = (img_path,
@@ -85,7 +85,7 @@ def generate_csv_and_ground_truth(args=None):
     parser.add_argument('--train_dataset', help='Path to training dataset. ', default='dataset/train/')
     parser.add_argument('--valid_dataset', help='Path to validation dataset. ', default='dataset/validation/')
     parser.add_argument('--output_path', help='Output path for generated csv files. ', default='dataset/')
-    parser.add_argument('--replace_path_by', help='Replace image path by given path. ', default='')
+    parser.add_argument('--path_to_dataset', help='Replace image path by given path. ', default='')
 
     # Call parser args
     parser = parser.parse_args(args)
@@ -93,7 +93,7 @@ def generate_csv_and_ground_truth(args=None):
     for set in [parser.train_dataset, parser.valid_dataset]:
         # Creates a dataframe from all xml files of a dataset
         xmlDf = xml_to_csv_and_ground_truth(set, output_path=parser.output_path,
-                                            replace_image_path_by=parser.replace_path_by)
+                                            path_to_dataset=parser.path_to_dataset)
 
         # Name csv file
         csvName = f"{parser.output_path}{'train' if 'train' in set else 'validation'}.csv"
