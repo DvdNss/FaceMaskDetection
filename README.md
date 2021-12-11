@@ -3,7 +3,7 @@
 <p align="center">
 <h3 align="center">Face Mask Detection using Retinanet</h3>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/DvdNss/FaceMaskDetection/main/resources/ex.jpg?token=AL7HZ2RLFPIQ4FFSAEUGMADBWQDVK" />
+  <img src="https://github.com/DvdNss/FaceMaskDetection/blob/main/resources/ex.jpg?raw=true" />
 </p>
 
 <!-- ABOUT THE PROJECT -->
