@@ -14,11 +14,21 @@ from tqdm import tqdm
 
 
 def png_to_jpg(args=None):
+    """
+    Convert .png files to .jpg files.
+
+    :param args: img_dir
+    :return:
+    """
+
+    # Init. parser
     parser = argparse.ArgumentParser(description='Convert .png files to .jpg files. ')
     parser.add_argument('--img_dir', help='Directory containing images. ')
 
+    # Call args
     parser = parser.parse_args(args)
 
+    # Convert imgs and save them
     for filename in tqdm(os.listdir(parser.img_dir)):
         if ".png" in filename:
             im1 = Image.open(parser.img_dir + filename)
