@@ -160,7 +160,7 @@ run = st.checkbox('Webcam mode')
 labels = load_labels()
 
 # Model selection
-model_path = st.selectbox('', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1,
+model_path = st.selectbox('', ('resnet50_29', 'resnet152_20'), index=0,
                           help='Select a model for inference. ')
 model = load_model(model_path=model_path)
 
