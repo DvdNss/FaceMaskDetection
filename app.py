@@ -66,7 +66,7 @@ def load_model(model_path):
     """
 
     # Load model
-    model = torch.load(f"model\\{model_path}.pt")
+    model = torch.load(f"model/{model_path}.pt")
     model = model.cuda() if torch.cuda.is_available() else model
     model.training = False
     model.eval()
