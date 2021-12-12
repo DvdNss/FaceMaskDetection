@@ -134,5 +134,5 @@ dmypy.json
 /dataset/train/
 /dataset/validation/annotation/
 /dataset/validation/png/
-/model/
-
+model/*
+!model/resnet50_29.pt

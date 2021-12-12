@@ -102,6 +102,15 @@ cd pytorch-retinanet
 python visualize_single_image.py --image_dir image_dir_path --model_path model_path --class_list labels_path
 ```
 
+5. Use the interface (webcam or images)
+```shell
+streamlit run app.py
+```
+
+<p align="center">
+  <img src="https://github.com/DvdNss/FaceMaskDetection/blob/main/resources/app.jpg?raw=true" />
+</p>
+
 <!-- CONTACT -->
 
 ## Contact
