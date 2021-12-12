@@ -5,9 +5,7 @@ __pycache__/
 .idea/
 /pytorch-retinanet/*
 dataset/*
-!dataset/labels_co.csv
-!dataset/train_co.csv
-!dataset/validation_co.csv
+!dataset/*.csv
 # C extensions
 *.so
 
