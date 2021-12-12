@@ -11,3 +11,4 @@ Pillow==8.4.0
 opencv-python==4.5.4.60
 tqdm==4.62.3
 streamlit==1.2.0
+ffmpeg==1.4
