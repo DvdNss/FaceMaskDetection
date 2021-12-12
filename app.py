@@ -165,7 +165,7 @@ model = load_model(model_path=model_path)
 
 # Load camera
 FRAME_WINDOW = st.image([])
-camera = cv2.VideoCapture(0)
+camera = cv2.VideoCapture(-1)
 
 # Process camera imgs
 while run:
