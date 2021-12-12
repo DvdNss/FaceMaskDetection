@@ -108,7 +108,7 @@ streamlit run app.py
 ```
 
 <p align="center">
-  <img src="https://github.com/DvdNss/FaceMaskDetection/blob/main/resources/app.jpg?raw=true" />
+  <img src="https://github.com/DvdNss/FaceMaskDetection/blob/main/resources/app.JPG?raw=true" />
 </p>
 
 <!-- CONTACT -->
