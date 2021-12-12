@@ -4,8 +4,7 @@ __pycache__/
 *$py.class
 .idea/
 /pytorch-retinanet/*
-dataset/*
-!dataset/*.csv
+
 # C extensions
 *.so
 
@@ -132,4 +131,6 @@ dmypy.json
 .pyre/
 /pytorch-retinanet/
 /pytorch-retinanet/resnet50-19c8e357.pth
-/pytorch-retinanet/resnet50-19c8e357.pth
+/dataset/train/
+/dataset/validation/annotation/
+/dataset/validation/png/
