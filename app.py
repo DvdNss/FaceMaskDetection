@@ -77,10 +77,11 @@ def load_model(model_path):
     return model
 
 
-def process_img(model, image, labels):
+def process_img(model, image, labels, caption: bool = True):
     """
     Process img given a model.
 
+    :param caption: whether to use captions or not
     :param image: image to process
     :param model: inference model
     :param labels: given labels
@@ -144,8 +145,8 @@ def process_img(model, image, labels):
                 'without_mask': (255, 0, 0),
                 'mask_weared_incorrect': (190, 100, 20)
             }
-            caption = '{}'.format(label_name)
-            draw_caption(image_orig, (x1, y1, x2, y2), caption)
+            cap = '{}'.format(label_name) if caption else ''
+            draw_caption(image_orig, (x1, y1, x2, y2), cap)
             cv2.rectangle(image_orig, (x1, y1), (x2, y2), color=colors[label_name], thickness=2)
             cv2.putText(image_orig,
                         f"{'{:.1f}'.format(1 / float(elapsed_time))}{'  cuda:' + str(torch.cuda.is_available()).lower()}",
@@ -155,7 +156,7 @@ def process_img(model, image, labels):
 
 # Page config
 st.title("Face Mask Detection")
-run = st.checkbox('Start the camera')
+run = st.checkbox('Webcam mode')
 labels = load_labels()
 
 # Model selection
@@ -163,12 +164,22 @@ model_path = st.selectbox('', ('resnet50_20', 'resnet50_29', 'resnet152_20'), in
                           help='Select a model for inference. ')
 model = load_model(model_path=model_path)
 
-# Load camera
-FRAME_WINDOW = st.image([])
-camera = cv2.VideoCapture(-1)
+if run:
+    camera = cv2.VideoCapture(-1)
 
-# Process camera imgs
-while run:
-    _, frame = camera.read()
-    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    FRAME_WINDOW.image(process_img(model, frame, labels))
+    # Process camera imgs
+    while run:
+        _, frame = camera.read()
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        st.image(process_img(model, frame, labels, caption=True))
+else:
+    index = st.number_input('', min_value=0, max_value=852, value=436)
+    image = cv2.imread(f'dataset/validation/image/maksssksksss{str(index)}.jpg')
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    left, right = st.columns([3, 1])
+    left.image(process_img(model, image, labels, caption=False))
+    right.write({
+        'green': 'with_mask',
+        'orange': 'mask_weared_incorrect',
+        'red': 'without_mask'
+    })
