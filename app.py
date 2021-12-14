@@ -10,10 +10,10 @@ import os.path
 import time
 
 import cv2
+import gdown
 import numpy as np
 import streamlit as st
 import torch
-import gdown
 
 
 def load_classes(csv_reader):
@@ -83,13 +83,13 @@ def load_model(model_path, ids, prefix: str = 'model/'):
     :return:
     """
 
-    url = f"https://drive.google.com/uc?id={ids[model_path]}"
-
     # Download model from drive if not stored locally
-    if not os.path.isfile(f"{prefix}{model_path}.pt"):
-        with st.spinner('Downloading model, this may take a minute...'):
-            gdown.download(url=url, output=f"{prefix}{model_path}.pt")
-        st.success('Model loaded! ')
+    with st.spinner('Downloading models, this may take a minute...'):
+        for key in ids:
+            if not os.path.isfile(f"{prefix}{key}.pt"):
+                url = f"https://drive.google.com/uc?id={ids[key]}"
+                gdown.download(url=url, output=f"{prefix}{key}.pt")
+    st.success('Models downloaded! ')
 
     # Load model
     if torch.cuda.is_available():
