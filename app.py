@@ -192,14 +192,15 @@ if run:
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         st.image(process_img(model, frame, labels, caption=True))
 else:
-    left, right = st.columns([3, 1])
-    index = left.number_input('', min_value=0, max_value=852, value=436)
-    cuda = right.write(f"CUDA:{torch.cuda.is_available()}")
+    index = st.number_input('', min_value=0, max_value=852, value=436)
     image = cv2.imread(f'dataset/validation/image/maksssksksss{str(index)}.jpg')
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    left, right = st.columns([3, 1])
     left.image(process_img(model, image, labels, caption=False))
     right.write({
         'green': 'with_mask',
         'orange': 'mask_weared_incorrect',
         'red': 'without_mask'
     })
+    device = 'CPU' if not torch.cuda.is_available() else 'GPU'
+    right.write(f"CUDA: {torch.cuda.is_available()} ({device})")
