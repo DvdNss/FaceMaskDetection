@@ -167,6 +167,7 @@ def process_img(model, image, labels, caption: bool = True):
 
 
 # Page config
+st.set_page_config(layout="centered")
 st.title("Face Mask Detection")
 run = st.checkbox('Webcam mode')
 labels = load_labels()
@@ -179,14 +180,8 @@ ids = {
 }
 
 # Model selection
-model_path = st.selectbox('', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1,
-                          help='Select a model for inference. ')
-uploaded_file = st.file_uploader('', type=['pt'], help='Upload custom model. ')
-
-if uploaded_file is not None:
-    model = load_model(model_path=model_path, ids=ids, prefix='')
-else:
-    model = load_model(model_path=model_path, ids=ids)
+model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1)
+model = load_model(model_path=model_path, ids=ids)
 
 if run:
     camera = cv2.VideoCapture(-1)
