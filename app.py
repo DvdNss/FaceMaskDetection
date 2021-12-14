@@ -187,7 +187,7 @@ def process_img(model, image, labels, caption: bool = True):
     return image_orig
 
 
-def discard_model():
+def discard_model(model):
     """
     Remove model from memory.
 
@@ -214,7 +214,7 @@ download_models(ids)
 
 # Model selection
 model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1,
-                          on_change=discard_model())
+                          on_change=discard_model(model))
 model = load_model(model_path=model_path)
 
 if run:
