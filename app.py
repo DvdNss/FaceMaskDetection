@@ -140,7 +140,7 @@ def process_img(model, image, labels, caption: bool = True):
             image = image.cuda()
 
         st = time.time()
-        scores, classification, transformed_anchors = model(image.cuda().float())
+        scores, classification, transformed_anchors = model(image.float())
         elapsed_time = time.time() - st
         idxs = np.where(scores.cpu() > 0.5)
 
