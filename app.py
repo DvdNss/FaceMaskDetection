@@ -73,8 +73,25 @@ def load_labels():
     return labels
 
 
+def download_models(ids):
+    """
+    Download all models.
+
+    :param ids: name and links of models
+    :return:
+    """
+
+    # Download model from drive if not stored locally
+    with st.spinner('Downloading models, this may take a minute...'):
+        for key in ids:
+            if not os.path.isfile(f"model/{key}.pt"):
+                url = f"https://drive.google.com/uc?id={ids[key]}"
+                gdown.download(url=url, output=f"model/{key}.pt")
+    st.success('Models downloaded! ')
+
+
 @st.cache(suppress_st_warning=True)
-def load_model(model_path, ids, prefix: str = 'model/'):
+def load_model(model_path, prefix: str = 'model/'):
     """
     Load model.
 
@@ -83,14 +100,6 @@ def load_model(model_path, ids, prefix: str = 'model/'):
     :param prefix: model prefix if needed
     :return:
     """
-
-    # Download model from drive if not stored locally
-    with st.spinner('Downloading models, this may take a minute...'):
-        for key in ids:
-            if not os.path.isfile(f"{prefix}{key}.pt"):
-                url = f"https://drive.google.com/uc?id={ids[key]}"
-                gdown.download(url=url, output=f"{prefix}{key}.pt")
-    st.success('Models downloaded! ')
 
     # Load model
     if torch.cuda.is_available():
@@ -193,7 +202,7 @@ ids = {
 }
 
 # Model selection
-model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=2)
+model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1)
 model = load_model(model_path=model_path, ids=ids)
 print(model.device_ids)
 
