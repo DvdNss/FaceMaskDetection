@@ -169,7 +169,7 @@ def process_img(model, image, labels, caption: bool = True):
 # Page config
 st.set_page_config(layout="centered")
 st.title("Face Mask Detection")
-run = st.checkbox('Webcam mode')
+run = st.checkbox('Webcam mode (not working on Streamlit Cloud)')
 labels = load_labels()
 
 # Models drive ids
@@ -184,15 +184,18 @@ model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'res
 model = load_model(model_path=model_path, ids=ids)
 
 if run:
-    camera = cv2.VideoCapture(-1)
+
+    camera = cv2.VideoCapture(0)
+    video = st.image([])
 
     # Process camera imgs
     while run:
         _, frame = camera.read()
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        st.image(process_img(model, frame, labels, caption=True))
+        video.image(process_img(model, frame, labels, caption=True))
+
 else:
-    index = st.number_input('', min_value=0, max_value=852, value=436)
+    index = st.number_input('', min_value=0, max_value=852, value=373)
     image = cv2.imread(f'dataset/validation/image/maksssksksss{str(index)}.jpg')
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     left, right = st.columns([3, 1])
