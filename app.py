@@ -96,7 +96,6 @@ def load_model(model_path, prefix: str = 'model/'):
     Load model.
 
     :param model_path: path to inference model
-    :param ids: models ids
     :param prefix: model prefix if needed
     :return:
     """
@@ -201,9 +200,11 @@ ids = {
     'resnet152_20': '1oUHqE_BgXehopdicuvPCGOxnwAdlDkEY',
 }
 
+download_models(ids)
+
 # Model selection
 model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1)
-model = load_model(model_path=model_path, ids=ids)
+model = load_model(model_path=model_path)
 print(model.device_ids)
 
 if run:
