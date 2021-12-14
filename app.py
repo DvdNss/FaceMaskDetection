@@ -96,7 +96,7 @@ def load_model(model_path, ids, prefix: str = 'model/'):
     if torch.cuda.is_available():
         model = torch.load(f"{prefix}{model_path}.pt").to('cuda')
     else:
-        model = torch.load(f"{prefix}{model_path}.pt").to('cpu')
+        model = torch.load(f"{prefix}{model_path}.pt", map_location=torch.device('cpu'))
     model.training = False
     model.eval()
 
