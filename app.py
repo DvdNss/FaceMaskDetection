@@ -72,7 +72,7 @@ def load_labels():
 
     return labels
 
-
+@st.cache
 def load_model(model_path, ids, prefix: str = 'model/'):
     """
     Load model.
