@@ -177,9 +177,8 @@ ids = {
     'resnet152_20': '1oUHqE_BgXehopdicuvPCGOxnwAdlDkEY',
 }
 
-m, s = st.columns([3, 1])
 # Model selection
-model_path = m.selectbox('', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1,
+model_path = st.selectbox('', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1,
                           help='Select a model for inference. ')
 
 model = load_model(model_path=model_path, ids=ids)
