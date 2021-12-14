@@ -59,29 +59,30 @@ def load_labels():
 
 
 @st.cache(suppress_st_warning=True)
-def load_model(model_path, ids):
+def load_model(model_path, ids, prefix: str = 'model/'):
     """
     Load model.
 
     :param model_path: path to inference model
     :param ids: models ids
+    :param prefix: model prefix if needed
     :return:
     """
 
     url = f"https://drive.google.com/uc?id={ids[model_path]}"
 
     # Download model from drive if not stored locally
-    if not os.path.isfile(f"model/{model_path}.pt"):
+    if not os.path.isfile(f"{prefix}{model_path}.pt"):
         with st.spinner('Downloading model, this may take a minute...'):
-            gdown.download(url=url, output=f"model/{model_path}.pt", quiet=False)
+            gdown.download(url=url, output=f"{prefix}{model_path}.pt")
         st.success('Model loaded! ')
 
     # Load model
     if torch.cuda.is_available():
-        model = torch.load(f"model/{model_path}.pt")
+        model = torch.load(f"{prefix}{model_path}.pt")
         model.cuda()
     else:
-        model = torch.load(f"model/{model_path}.pt", map_location=torch.device('cpu'))
+        model = torch.load(f"{prefix}{model_path}.pt", map_location=torch.device('cpu'))
     model.training = False
     model.eval()
 
@@ -180,8 +181,12 @@ ids = {
 # Model selection
 model_path = st.selectbox('', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1,
                           help='Select a model for inference. ')
+uploaded_file = st.file_uploader('custom model', type=['pt'])
 
-model = load_model(model_path=model_path, ids=ids)
+if uploaded_file is not None:
+    model = load_model(model_path=model_path, ids=ids, prefix='')
+else:
+    model = load_model(model_path=model_path, ids=ids)
 
 if run:
     camera = cv2.VideoCapture(-1)
