@@ -193,8 +193,9 @@ ids = {
 }
 
 # Model selection
-model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1)
+model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=2)
 model = load_model(model_path=model_path, ids=ids)
+print(model.device_ids)
 
 if run:
     camera = cv2.VideoCapture(0)
