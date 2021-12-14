@@ -17,6 +17,12 @@ import gdown
 
 
 def load_classes(csv_reader):
+    """
+    Load classes from csv.
+
+    :param csv_reader: csv
+    :return:
+    """
     result = {}
 
     for line, row in enumerate(csv_reader):
@@ -35,6 +41,15 @@ def load_classes(csv_reader):
 
 
 def draw_caption(image, box, caption):
+    """
+    Draw caption and bbox on image.
+
+    :param image: image
+    :param box: bounding box
+    :param caption: caption
+    :return:
+    """
+
     b = np.array(box).astype(int)
     cv2.putText(image, caption, (b[0], b[1] - 10), cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 0), 2)
     cv2.putText(image, caption, (b[0], b[1] - 10), cv2.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 1)
@@ -105,19 +120,18 @@ def process_img(model, image, labels, caption: bool = True):
 
     smallest_side = min(rows, cols)
 
-    # rescale the image so the smallest side is min_side
+    # Rescale the image
     min_side = 608
     max_side = 1024
     scale = min_side / smallest_side
 
-    # check if the largest side is now greater than max_side, which can happen
-    # when images have a large aspect ratio
+    # Check if the largest side is now greater than max_side
     largest_side = max(rows, cols)
 
     if largest_side * scale > max_side:
         scale = max_side / largest_side
 
-    # resize the image with the computed scale
+    # Resize the image with the computed scale
     image = cv2.resize(image, (int(round(cols * scale)), int(round((rows * scale)))))
     rows, cols, cns = image.shape
 
@@ -184,7 +198,6 @@ model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'res
 model = load_model(model_path=model_path, ids=ids)
 
 if run:
-
     camera = cv2.VideoCapture(0)
     video = st.image([])
 
