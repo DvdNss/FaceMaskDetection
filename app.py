@@ -6,12 +6,14 @@ Author: @DvdNss
 Created on 12/10/2021
 """
 import csv
+import os.path
 import time
 
 import cv2
 import numpy as np
 import streamlit as st
 import torch
+import gdown
 
 
 def load_classes(csv_reader):
@@ -56,14 +58,23 @@ def load_labels():
     return labels
 
 
-@st.cache
-def load_model(model_path):
+@st.cache(suppress_st_warning=True)
+def load_model(model_path, ids):
     """
     Load model.
 
     :param model_path: path to inference model
+    :param ids: models ids
     :return:
     """
+
+    url = f"https://drive.google.com/uc?id={ids[model_path]}"
+
+    # Download model from drive if not stored locally
+    if not os.path.isfile(f"model/{model_path}.pt"):
+        with st.spinner('Downloading model, this may take a minute...'):
+            gdown.download(url=url, output=f"model/{model_path}.pt", quiet=False)
+        st.success('Model loaded! ')
 
     # Load model
     if torch.cuda.is_available():
@@ -159,10 +170,19 @@ st.title("Face Mask Detection")
 run = st.checkbox('Webcam mode')
 labels = load_labels()
 
+# Models drive ids
+ids = {
+    'resnet50_20': '17c2kseAC3y62IwaRQW4m1Vc-7o3WjPdh',
+    'resnet50_29': '1E_IOIuE5OpO4tQgTbXjdAmXR-9BCxxmT',
+    'resnet152_20': '1oUHqE_BgXehopdicuvPCGOxnwAdlDkEY',
+}
+
+m, s = st.columns([3, 1])
 # Model selection
-model_path = st.selectbox('', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1,
+model_path = m.selectbox('', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1,
                           help='Select a model for inference. ')
-model = load_model(model_path=model_path)
+
+model = load_model(model_path=model_path, ids=ids)
 
 if run:
     camera = cv2.VideoCapture(-1)
