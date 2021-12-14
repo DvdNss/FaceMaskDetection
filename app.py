@@ -211,6 +211,7 @@ ids = {
 }
 
 download_models(ids)
+model = []
 
 # Model selection
 model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1,
