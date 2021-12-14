@@ -135,4 +135,3 @@ dmypy.json
 /dataset/validation/annotation/
 /dataset/validation/png/
 model/*
-!model/resnet50_29.pt
