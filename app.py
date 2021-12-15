@@ -105,7 +105,7 @@ def load_model(model_path, prefix: str = 'model/'):
         model = torch.load(f"{prefix}{model_path}.pt").to('cuda')
     else:
         model = torch.load(f"{prefix}{model_path}.pt", map_location=torch.device('cpu'))
-        model = model.module.cpu()
+        # model = model.module.cpu()
     model.training = False
     model.eval()
 
@@ -190,7 +190,7 @@ def process_img(model, image, labels, caption: bool = True):
 
 # Page config
 st.set_page_config(layout="centered")
-st.title("Face Mask Detection")
+st.sidebar.title("Face Mask Detection")
 
 # Models drive ids
 ids = {
@@ -201,56 +201,55 @@ ids = {
 
 # Download all models from drive
 download_models(ids)
-page = st.selectbox('', options=('Description', 'Inference', 'Webcam'), index=0, help='Choose where to go. ')
+page = st.sidebar.selectbox('', options=('Description', 'Inference', 'Webcam'), index=0, help='Choose where to go. ')
 
 # Model selection
 labels = load_labels()
-model_path = st.selectbox('Choose a model', ('resnet50_20', 'resnet152_20'), index=0)
+model_path = st.sidebar.selectbox('Choose a model', ('resnet50_20', 'resnet152_20'), index=0)
 model = load_model(model_path=model_path) if model_path != '' else None
 
-# if page == 'Inference':
+if page == 'Inference':
+    # Display example selection
+    index = st.number_input('', min_value=0, max_value=852, value=373, help='Choose an image. ')
 
-# Display example selection
-index = st.number_input('', min_value=0, max_value=852, value=373, help='Choose an image. ')
+    # Get corresponding image and transform it
+    image = cv2.imread(f'dataset/validation/image/maksssksksss{str(index)}.jpg')
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-# Get corresponding image and transform it
-image = cv2.imread(f'dataset/validation/image/maksssksksss{str(index)}.jpg')
-image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    left, right = st.columns([3, 1])
 
-left, right = st.columns([3, 1])
+    # Draw img on left
+    left.image(process_img(model, image, labels, caption=False))
 
-# Draw img on left
-left.image(process_img(model, image, labels, caption=False))
+    # Write labels dict and device on right
+    right.write({
+        'green': 'with_mask',
+        'orange': 'mask_weared_incorrect',
+        'red': 'without_mask'
+    })
+    device = 'CPU' if not torch.cuda.is_available() else 'GPU'
+    right.write(f"CUDA: {torch.cuda.is_available()} ({device})")
 
-# Write labels dict and device on right
-right.write({
-    'green': 'with_mask',
-    'orange': 'mask_weared_incorrect',
-    'red': 'without_mask'
-})
-device = 'CPU' if not torch.cuda.is_available() else 'GPU'
-right.write(f"CUDA: {torch.cuda.is_available()} ({device})")
+elif page == "Webcam":
+    try:
+        # Get webcam feed
+        camera = cv2.VideoCapture(0)
 
-# elif page == "Webcam":
-#     try:
-#         # Get webcam feed
-#         camera = cv2.VideoCapture(0)
-#
-#         # Prepare video container
-#         video = st.image([])
-#
-#         while page == "Webcam":
-#             _, frame = camera.read()
-#             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-#             video.image(process_img(model, frame, labels, caption=True))
-#     except:
-#         st.warning(
-#             'Unable to detect corresponding device. Note that this feature isn\'t available on Streamlit Cloud. ')
-#
-# elif page == 'Description':
-#     st.title('Face Mask Detection')
-#     st.image('resources/ex.jpg')
-#     st.markdown(
-#         "This project aims to create a Face Mask Detection model to visually detect facemasks on images and videos. "
-#         "We operate with 3 labels: \n\n * _with_mask_ \n * _without_mask_\n * _mask_weared_incorrect_ \n\nThe dataset "
-#         "contains approximately 2500 hand-collected and hand-labelled images.")
+        # Prepare video container
+        video = st.image([])
+
+        while page == "Webcam":
+            _, frame = camera.read()
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            video.image(process_img(model, frame, labels, caption=True))
+    except:
+        st.warning(
+            'Unable to detect corresponding device. Note that this feature isn\'t available on Streamlit Cloud. ')
+
+elif page == 'Description':
+    st.title('Face Mask Detection')
+    st.image('resources/ex.jpg')
+    st.markdown(
+        "This project aims to create a Face Mask Detection model to visually detect facemasks on images and videos. "
+        "We operate with 3 labels: \n\n * _with_mask_ \n * _without_mask_\n * _mask_weared_incorrect_ \n\nThe dataset "
+        "contains approximately 2500 hand-collected and hand-labelled images.")
