@@ -8,6 +8,7 @@ Created on 12/10/2021
 import csv
 import os.path
 import time
+from os import listdir
 
 import cv2
 import gdown
@@ -88,6 +89,7 @@ def download_models(ids):
                 url = f"https://drive.google.com/uc?id={ids[key]}"
                 gdown.download(url=url, output=f"model/{key}.pt")
 
+    print(os.listdir('model/'))
 
 @st.cache(suppress_st_warning=True)
 def load_model(model_path, prefix: str = 'model/'):
