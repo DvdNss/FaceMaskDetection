@@ -12,6 +12,7 @@
 
 This project aims to create a Face Mask Detection model to visually detect facemasks on images and videos. We operate
 with 3 labels:
+
 * _with_mask_
 * _without_mask_
 * _mask_weared_incorrect_
@@ -19,11 +20,12 @@ with 3 labels:
 The dataset contains approximately 2500 hand-collected and hand-labelled images.
 
 __Results:__
-* ResNet152
-  * mAP: 68%
-  * with_mask: 0.81
-  * without_mask: 0.67
-  * mask_weared_incorrect: 0.56
+
+ Models | mAP | with_mask | without_mask | mask_weared_incorrect |
+:---: | :---: | :---: | :---: | :---: |
+ResNet50 | 68% | 81% | 67% | 56% |
+ResNet152 | 66% | 65% | 81% | 52% |
+
 
 [__Test it here!__](https://share.streamlit.io/dvdnss/facemaskdetection/main/app.py)
 
@@ -68,6 +70,7 @@ pip install -r requirements.txt
 ```
 
 3. Clone PyTorch-Retinanet
+
 ```shell
 git clone https://github.com/yhenon/pytorch-retinanet.git
 ```
@@ -88,29 +91,34 @@ git clone https://github.com/yhenon/pytorch-retinanet.git
 ### Example
 
 1. Convert datasets to csv file using `annots_to_csv.py`
+
 ```shell
 python annots_to_csv.py --train_dataset path_to_train_dataset --valid_dataset path_to_valid_dataset --output_path path_of_outputs
 ```
 
 2. Train a given model using `pytorch-retinanet/train.py`
+
 ```shell
 cd pytorch-retinanet
 python train.py --dataset csv --csv_train path_to_train_csv  --csv_classes path_to_class_csv  --csv_val path_to_valid_csv --depth depth_of_resnset --epochs number_of_epochs
 ```
 
 3. Evaluate a given model using `pytorch-retinanet/csv_evaluation.py`
+
 ```shell
 cd pytorch-retinanet
 python csv_validation.py --csv_annotations_path path_to_val_annots --model_path model_path --images_path path_to_val_img --class_list_path path_to_labels
 ```
 
 4. Visualize result using `pytorch-retinanet/visualize_single_image.py`
+
 ```shell
 cd pytorch-retinanet
 python visualize_single_image.py --image_dir image_dir_path --model_path model_path --class_list labels_path
 ```
 
 5. Use the interface (webcam or images)
+
 ```shell
 streamlit run app.py
 ```
