@@ -210,7 +210,7 @@ model = load_model(model_path=model_path) if model_path != '' else None
 
 if page == 'Inference':
     # Display example selection
-    index = st.number_input('', min_value=0, max_value=852, value=373, help='Choose an image. ')
+    index = st.number_input('', min_value=0, max_value=852, value=495, help='Choose an image. ')
 
     # Whether to use precomputed img or not
     cached = st.checkbox('Use cached image (precomputed with gpu)', value=True)
