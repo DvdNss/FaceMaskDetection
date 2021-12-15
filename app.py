@@ -194,7 +194,7 @@ st.sidebar.title("Face Mask Detection")
 # Models drive ids
 ids = {
     'resnet50_20': '17c2kseAC3y62IwaRQW4m1Vc-7o3WjPdh',
-    # 'resnet50_29': '1E_IOIuE5OpO4tQgTbXjdAmXR-9BCxxmT',
+    'resnet50_29': '1E_IOIuE5OpO4tQgTbXjdAmXR-9BCxxmT',
     'resnet152_20': '1oUHqE_BgXehopdicuvPCGOxnwAdlDkEY',
 }
 
@@ -204,7 +204,7 @@ page = st.sidebar.selectbox('', options=('Description', 'Inference', 'Webcam'), 
 
 # Model selection
 labels = load_labels()
-model_path = st.sidebar.selectbox('Choose a model', ('resnet50_20', 'resnet152_20'), index=0)
+model_path = st.sidebar.selectbox('Choose a model', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=0)
 model = load_model(model_path=model_path) if model_path != '' else None
 
 if page == 'Inference':
