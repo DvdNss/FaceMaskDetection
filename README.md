@@ -24,7 +24,7 @@ __Results:__
 Models | mAP | with_mask | without_mask | mask_weared_incorrect | FPS (RTX 3060 Ti + CUDA) |
 :---: | :---: | :---: | :---: | :---: | :---: |
 ResNet50 | 68% | 81% | 67% | 56% | ~20 |
-ResNet152 | 66% | 65% | 81% | 52% | ~12 |
+ResNet152 | 66% | 81% | 65% | 52% | ~12 |
 
 [__Test via Web App here!__](https://share.streamlit.io/dvdnss/facemaskdetection/main/app.py)
 
