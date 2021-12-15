@@ -91,6 +91,7 @@ def download_models(ids):
 
     print(os.listdir('model/'))
 
+
 @st.cache(suppress_st_warning=True)
 def load_model(model_path, prefix: str = 'model/'):
     """
@@ -106,6 +107,7 @@ def load_model(model_path, prefix: str = 'model/'):
         model = torch.load(f"{prefix}{model_path}.pt").to('cuda')
     else:
         model = torch.load(f"{prefix}{model_path}.pt", map_location=torch.device('cpu'))
+        model.module.cpu()
     model.training = False
     model.eval()
 
