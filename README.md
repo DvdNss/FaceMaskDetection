@@ -88,9 +88,12 @@ git clone https://github.com/yhenon/pytorch-retinanet.git
 
 * `dataset/`: contains datasets files
 * `retinanet/`: contains retinanet scripts
+* `model/`: contains models
+* `resources/`: contains readme and webapp images
 * `annots_to_csv.py`: script for datasets conversion to csv
 * `file_conversion.py`: script for png conversion to jpg
 * `device.py`: script for device detection (gpu or cpu)
+* `precompute_dataset.py`: script for dataset precomputing
 * `app.py`: streamlit webapp
 
 ### Example
