@@ -105,7 +105,7 @@ def load_model(model_path, prefix: str = 'model/'):
         model = torch.load(f"{prefix}{model_path}.pt").to('cuda')
     else:
         model = torch.load(f"{prefix}{model_path}.pt", map_location=torch.device('cpu'))
-        # model = model.module.cpu()
+        model = model.module.cpu()
     model.training = False
     model.eval()
 
@@ -162,7 +162,7 @@ def process_img(model, image, labels, caption: bool = True):
             image = image.cuda()
 
         st = time.time()
-        scores, classification, transformed_anchors = model(image.cuda().float())
+        scores, classification, transformed_anchors = model(image.float())
         elapsed_time = time.time() - st
         idxs = np.where(scores.cpu() > 0.5)
 
@@ -195,7 +195,7 @@ st.sidebar.title("Face Mask Detection")
 # Models drive ids
 ids = {
     'resnet50_20': '17c2kseAC3y62IwaRQW4m1Vc-7o3WjPdh',
-    'resnet50_29': '1E_IOIuE5OpO4tQgTbXjdAmXR-9BCxxmT',
+    # 'resnet50_29': '1E_IOIuE5OpO4tQgTbXjdAmXR-9BCxxmT',
     'resnet152_20': '1oUHqE_BgXehopdicuvPCGOxnwAdlDkEY',
 }
 
