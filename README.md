@@ -8,7 +8,7 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## About The Project
+## About The Project 
 
 This project aims to create a Face Mask Detection model to visually detect facemasks on images and videos. We operate
 with 3 labels:
@@ -26,7 +26,7 @@ Models | mAP | with_mask | without_mask | mask_weared_incorrect | FPS (RTX 3060 
 ResNet50 | 68% | 81% | 67% | 56% | ~20 |
 ResNet152 | 66% | 65% | 81% | 52% | ~12 |
 
-[__Test it here!__](https://share.streamlit.io/dvdnss/facemaskdetection/main/app.py)
+[__Test via Web App here!__](https://share.streamlit.io/dvdnss/facemaskdetection/main/app.py)
 
 
 How good are the models? That good:
