@@ -212,15 +212,22 @@ if page == 'Inference':
     # Display example selection
     index = st.number_input('', min_value=0, max_value=852, value=373, help='Choose an image. ')
 
-    # Get corresponding image and transform it
-    image = cv2.imread(f'dataset/validation/image/maksssksksss{str(index)}.jpg')
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    # Whether to use precomputed img or not
+    cached = st.checkbox('Use cached image (precomputed)')
 
     left, right = st.columns([3, 1])
 
-    # Draw img on left
-    with st.spinner('Please wait while the image is being processed... This may take a while. '):
-        image = process_img(model, image, labels, caption=False)
+    if not cached:
+        # Get corresponding image and transform it
+        image = cv2.imread(f'dataset/validation/image/maksssksksss{str(index)}.jpg')
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+        # Process img
+        with st.spinner('Please wait while the image is being processed... This may take a while. '):
+            image = process_img(model, image, labels, caption=False)
+    else:
+        image = cv2.imread(f"dataset/validation/{model_path.split('_')[0]}/maksssksksss{str(index)}.jpg")
+
     left.image(image)
 
     # Write labels dict and device on right
