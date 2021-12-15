@@ -107,7 +107,7 @@ def load_model(model_path, prefix: str = 'model/'):
         model = torch.load(f"{prefix}{model_path}.pt").to('cuda')
     else:
         model = torch.load(f"{prefix}{model_path}.pt", map_location=torch.device('cpu'))
-        model.module.cpu()
+        model = model.module.cpu()
     model.training = False
     model.eval()
 
