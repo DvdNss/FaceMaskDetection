@@ -89,8 +89,6 @@ def download_models(ids):
                 url = f"https://drive.google.com/uc?id={ids[key]}"
                 gdown.download(url=url, output=f"model/{key}.pt")
 
-    print(os.listdir('model/'))
-
 
 @st.cache(suppress_st_warning=True)
 def load_model(model_path, prefix: str = 'model/'):
@@ -206,29 +204,30 @@ ids = {
 download_models(ids)
 
 # Model selection
-model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1)
-model = load_model(model_path=model_path)
+model_path = st.selectbox('Model selection', ('', 'resnet50_20', 'resnet50_29', 'resnet152_20'), index=0)
+model = load_model(model_path=model_path) if model_path != '' else None
 
-if run:
-    camera = cv2.VideoCapture(0)
-    video = st.image([])
+if model is not None:
+    if run:
+        camera = cv2.VideoCapture(0)
+        video = st.image([])
 
-    # Process camera imgs
-    while run:
-        _, frame = camera.read()
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        video.image(process_img(model, frame, labels, caption=True))
+        # Process camera imgs
+        while run:
+            _, frame = camera.read()
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            video.image(process_img(model, frame, labels, caption=True))
 
-else:
-    index = st.number_input('', min_value=0, max_value=852, value=373)
-    image = cv2.imread(f'dataset/validation/image/maksssksksss{str(index)}.jpg')
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    left, right = st.columns([3, 1])
-    left.image(process_img(model, image, labels, caption=False))
-    right.write({
-        'green': 'with_mask',
-        'orange': 'mask_weared_incorrect',
-        'red': 'without_mask'
-    })
-    device = 'CPU' if not torch.cuda.is_available() else 'GPU'
-    right.write(f"CUDA: {torch.cuda.is_available()} ({device})")
+    else:
+        index = st.number_input('', min_value=0, max_value=852, value=373)
+        image = cv2.imread(f'dataset/validation/image/maksssksksss{str(index)}.jpg')
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        left, right = st.columns([3, 1])
+        left.image(process_img(model, image, labels, caption=False))
+        right.write({
+            'green': 'with_mask',
+            'orange': 'mask_weared_incorrect',
+            'red': 'without_mask'
+        })
+        device = 'CPU' if not torch.cuda.is_available() else 'GPU'
+        right.write(f"CUDA: {torch.cuda.is_available()} ({device})")
