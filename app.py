@@ -213,7 +213,7 @@ if page == 'Inference':
     index = st.number_input('', min_value=0, max_value=852, value=373, help='Choose an image. ')
 
     # Whether to use precomputed img or not
-    cached = st.checkbox('Use cached image (precomputed)')
+    cached = st.checkbox('Use cached image (precomputed)', value=True)
 
     left, right = st.columns([3, 1])
 
