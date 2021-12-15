@@ -30,7 +30,7 @@ ResNet152 | 66% | 65% | 81% | 52% | ~12 |
 
 How good is it? That good:
 <p align="center">
-  <img src="https://github.com/DvdNss/FaceMaskDetection/blob/main/resources/ex_inf.jpg?raw=true" />
+  <img src="https://github.com/DvdNss/FaceMaskDetection/blob/main/resources/ex_inf.jpeg?raw=true" />
 </p>
 
 <!-- TABLE OF CONTENTS -->
