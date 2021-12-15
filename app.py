@@ -160,7 +160,7 @@ def process_img(model, image, labels, caption: bool = True):
             image = image.cuda()
 
         st = time.time()
-        scores, classification, transformed_anchors = model(image.float())
+        scores, classification, transformed_anchors = model(image.cuda().float())
         elapsed_time = time.time() - st
         idxs = np.where(scores.cpu() > 0.5)
 
@@ -203,7 +203,7 @@ download_models(ids)
 
 # Model selection
 model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1)
-model = load_model(model_path=model_path).to('cpu' if not torch.cuda.is_available() else 'cuda')
+model = load_model(model_path=model_path)
 
 if run:
     camera = cv2.VideoCapture(0)
