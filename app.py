@@ -190,7 +190,7 @@ def process_img(model, image, labels, caption: bool = True):
 
 # Page config
 st.set_page_config(layout="centered")
-st.sidebar.title("Face Mask Detection")
+st.title("Face Mask Detection")
 
 # Models drive ids
 ids = {
@@ -201,11 +201,11 @@ ids = {
 
 # Download all models from drive
 download_models(ids)
-page = st.sidebar.selectbox('', options=('Description', 'Inference', 'Webcam'), index=0, help='Choose where to go. ')
+page = st.selectbox('', options=('Description', 'Inference', 'Webcam'), index=0, help='Choose where to go. ')
 
 # Model selection
 labels = load_labels()
-model_path = st.sidebar.selectbox('Choose a model', ('resnet50_20', 'resnet152_20'), index=0)
+model_path = st.selectbox('Choose a model', ('resnet50_20', 'resnet152_20'), index=0)
 model = load_model(model_path=model_path) if model_path != '' else None
 
 # if page == 'Inference':
