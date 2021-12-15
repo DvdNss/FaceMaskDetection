@@ -257,7 +257,7 @@ elif page == "Webcam":
 
 elif page == 'Description':
     st.title('Face Mask Detection')
-    st.image('resources/ex.jpg')
+    st.image('resources/ex.jpg', caption="[GitHub](https://github.com/DvdNss/face_mask_detection)")
     st.markdown(
         "This project aims to create a Face Mask Detection model to visually detect facemasks on images and videos. "
         "We operate with 3 labels: \n\n * _with_mask_ \n * _without_mask_\n * _mask_weared_incorrect_ \n\nThe dataset "
