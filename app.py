@@ -201,7 +201,6 @@ ids = {
 
 # Download all models from drive
 download_models(ids)
-
 page = st.sidebar.selectbox('', options=('Description', 'Inference', 'Webcam'), index=0, help='Choose where to go. ')
 
 # Model selection
@@ -242,14 +241,16 @@ elif page == 'Inference':
         right.write(f"CUDA: {torch.cuda.is_available()} ({device})")
 
 elif page == "Webcam":
+    try:
+        # Get webcam feed
+        camera = cv2.VideoCapture(0)
 
-    # Get webcam feed
-    camera = cv2.VideoCapture(0)
+        # Prepare video container
+        video = st.image([])
 
-    # Prepare video container
-    video = st.image([])
-
-    while page == "Webcam":
-        _, frame = camera.read()
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        video.image(process_img(model, frame, labels, caption=True))
+        while page == "Webcam":
+            _, frame = camera.read()
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            video.image(process_img(model, frame, labels, caption=True))
+    except:
+        st.warning('Unable to detect corresponding device. Note that this feature isn\'t available on Streamlit Cloud. ')
