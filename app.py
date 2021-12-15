@@ -17,6 +17,7 @@ import streamlit as st
 import torch
 
 
+@st.cache
 def load_classes(csv_reader):
     """
     Load classes from csv.
@@ -41,6 +42,7 @@ def load_classes(csv_reader):
     return result
 
 
+@st.cache
 def draw_caption(image, box, caption):
     """
     Draw caption and bbox on image.
@@ -112,6 +114,7 @@ def load_model(model_path, prefix: str = 'model/'):
     return model
 
 
+@st.cache
 def process_img(model, image, labels, caption: bool = True):
     """
     Process img given a model.
