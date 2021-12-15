@@ -18,7 +18,14 @@ with 3 labels:
 
 The dataset contains approximately 2500 hand-collected and hand-labelled images.
 
-[__Test it here!__]()
+__Results:__
+* ResNet152
+  * mAP: 68%
+  * with_mask: 0.81
+  * without_mask: 0.67
+  * mask_weared_incorrect: 0.56
+
+[__Test it here!__](https://share.streamlit.io/dvdnss/facemaskdetection/main/app.py)
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
