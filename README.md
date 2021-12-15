@@ -21,7 +21,7 @@ The dataset contains approximately 2500 hand-collected and hand-labelled images.
 
 __Results:__
 
-Models | mAP | with_mask | without_mask | mask_weared_incorrect | FPS |
+Models | mAP | with_mask | without_mask | mask_weared_incorrect | FPS (RTX 3060 Ti + CUDA) |
 :---: | :---: | :---: | :---: | :---: | :---: |
 ResNet50 | 68% | 81% | 67% | 56% | ~20 |
 ResNet152 | 66% | 65% | 81% | 52% | ~12 |
