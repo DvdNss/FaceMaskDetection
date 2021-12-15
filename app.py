@@ -17,7 +17,6 @@ import streamlit as st
 import torch
 
 
-@st.cache
 def load_classes(csv_reader):
     """
     Load classes from csv.
