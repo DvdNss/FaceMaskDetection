@@ -217,30 +217,28 @@ if page == 'Description':
         "contains approximately 2500 hand-collected and hand-labelled images.")
 
 elif page == 'Inference':
-    # After model selection
-    if model is not None:
-        # Display example selection
-        index = st.number_input('', min_value=0, max_value=852, value=373, help='Choose an image. ')
+    # Display example selection
+    index = st.number_input('', min_value=0, max_value=852, value=373, help='Choose an image. ')
 
-        # Get corresponding image and transform it
-        image = cv2.imread(f'dataset/validation/image/maksssksksss{str(index)}.jpg')
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    # Get corresponding image and transform it
+    image = cv2.imread(f'dataset/validation/image/maksssksksss{str(index)}.jpg')
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-        left, right = st.columns([3, 1])
+    left, right = st.columns([3, 1])
 
-        # Draw img on left
-        with st.spinner(''):
-            image = process_img(model, image, labels, caption=False)
-        left.image(image)
+    # Draw img on left
+    with st.spinner('Please wait...'):
+        image = process_img(model, image, labels, caption=False)
+    left.image(image)
 
-        # Write labels dict and device on right
-        right.write({
-            'green': 'with_mask',
-            'orange': 'mask_weared_incorrect',
-            'red': 'without_mask'
-        })
-        device = 'CPU' if not torch.cuda.is_available() else 'GPU'
-        right.write(f"CUDA: {torch.cuda.is_available()} ({device})")
+    # Write labels dict and device on right
+    right.write({
+        'green': 'with_mask',
+        'orange': 'mask_weared_incorrect',
+        'red': 'without_mask'
+    })
+    device = 'CPU' if not torch.cuda.is_available() else 'GPU'
+    right.write(f"CUDA: {torch.cuda.is_available()} ({device})")
 
 elif page == "Webcam":
     try:
@@ -255,4 +253,5 @@ elif page == "Webcam":
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             video.image(process_img(model, frame, labels, caption=True))
     except:
-        st.warning('Unable to detect corresponding device. Note that this feature isn\'t available on Streamlit Cloud. ')
+        st.warning(
+            'Unable to detect corresponding device. Note that this feature isn\'t available on Streamlit Cloud. ')
