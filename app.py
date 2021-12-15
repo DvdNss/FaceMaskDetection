@@ -210,15 +210,7 @@ labels = load_labels()
 model_path = st.sidebar.selectbox('Choose a model', ('resnet50_20', 'resnet152_20'), index=0)
 model = load_model(model_path=model_path) if model_path != '' else None
 
-if page == 'Description':
-    st.title('Face Mask Detection')
-    st.image('resources/ex.jpg')
-    st.markdown(
-        "This project aims to create a Face Mask Detection model to visually detect facemasks on images and videos. "
-        "We operate with 3 labels: \n\n * _with_mask_ \n * _without_mask_\n * _mask_weared_incorrect_ \n\nThe dataset "
-        "contains approximately 2500 hand-collected and hand-labelled images.")
-
-elif page == 'Inference':
+if page == 'Inference':
     # Display example selection
     index = st.number_input('', min_value=0, max_value=852, value=373, help='Choose an image. ')
 
@@ -229,9 +221,7 @@ elif page == 'Inference':
     left, right = st.columns([3, 1])
 
     # Draw img on left
-    with st.spinner('Please wait...'):
-        image = process_img(model, image, labels, caption=False)
-    left.image(image)
+    left.image(process_img(model, image, labels, caption=False))
 
     # Write labels dict and device on right
     right.write({
@@ -257,3 +247,11 @@ elif page == "Webcam":
     except:
         st.warning(
             'Unable to detect corresponding device. Note that this feature isn\'t available on Streamlit Cloud. ')
+
+elif page == 'Description':
+    st.title('Face Mask Detection')
+    st.image('resources/ex.jpg')
+    st.markdown(
+        "This project aims to create a Face Mask Detection model to visually detect facemasks on images and videos. "
+        "We operate with 3 labels: \n\n * _with_mask_ \n * _without_mask_\n * _mask_weared_incorrect_ \n\nThe dataset "
+        "contains approximately 2500 hand-collected and hand-labelled images.")
