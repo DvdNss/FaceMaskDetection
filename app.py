@@ -218,7 +218,9 @@ if page == 'Inference':
     left, right = st.columns([3, 1])
 
     # Draw img on left
-    left.image(process_img(model, image, labels, caption=False))
+    with st.spinner('Please wait while the image is being processed... This may take a while. '):
+        image = process_img(model, image, labels, caption=False)
+    left.image(image)
 
     # Write labels dict and device on right
     right.write({
