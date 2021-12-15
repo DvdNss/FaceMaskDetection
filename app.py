@@ -87,7 +87,6 @@ def download_models(ids):
             if not os.path.isfile(f"model/{key}.pt"):
                 url = f"https://drive.google.com/uc?id={ids[key]}"
                 gdown.download(url=url, output=f"model/{key}.pt")
-    st.success('Models downloaded! ')
 
 
 @st.cache(suppress_st_warning=True)
@@ -204,7 +203,7 @@ download_models(ids)
 
 # Model selection
 model_path = st.selectbox('Model selection', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=1)
-model = load_model(model_path=model_path)
+model = load_model(model_path=model_path).to('cpu' if not torch.cuda.is_available() else 'cuda')
 
 if run:
     camera = cv2.VideoCapture(0)
