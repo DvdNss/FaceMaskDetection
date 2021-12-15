@@ -104,7 +104,8 @@ def load_model(model_path, prefix: str = 'model/'):
     if torch.cuda.is_available():
         model = torch.load(f"{prefix}{model_path}.pt").to('cuda')
     else:
-        model = torch.load(f"{prefix}{model_path}.pt", map_location=torch.device('cpu')).module.cpu()
+        model = torch.load(f"{prefix}{model_path}.pt", map_location=torch.device('cpu'))
+        # model = model.module.cpu()
     model.training = False
     model.eval()
 
@@ -204,7 +205,7 @@ page = st.sidebar.selectbox('', options=('Description', 'Inference', 'Webcam'), 
 
 # Model selection
 labels = load_labels()
-model_path = st.sidebar.selectbox('Choose a model', ('resnet50_20', 'resnet50_29', 'resnet152_20'), index=0)
+model_path = st.sidebar.selectbox('Choose a model', options=[k for k in ids], index=0)
 model = load_model(model_path=model_path) if model_path != '' else None
 
 if page == 'Inference':
