@@ -21,13 +21,17 @@ The dataset contains approximately 2500 hand-collected and hand-labelled images.
 
 __Results:__
 
- Models | mAP | with_mask | without_mask | mask_weared_incorrect | FPS |
+Models | mAP | with_mask | without_mask | mask_weared_incorrect | FPS |
 :---: | :---: | :---: | :---: | :---: | :---: |
 ResNet50 | 68% | 81% | 67% | 56% | ~20 |
 ResNet152 | 66% | 65% | 81% | 52% | ~12 |
 
-
 [__Test it here!__](https://share.streamlit.io/dvdnss/facemaskdetection/main/app.py)
+
+How good is it? That good:
+<p align="center">
+  <img src="https://github.com/DvdNss/FaceMaskDetection/blob/main/resources/ex_inf.jpg?raw=true" />
+</p>
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
