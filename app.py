@@ -201,15 +201,23 @@ ids = {
     'resnet152_20': '1oUHqE_BgXehopdicuvPCGOxnwAdlDkEY',
 }
 
+# Download all models from drive
 download_models(ids)
 
 # Model selection
 model_path = st.selectbox('Model selection', ('', 'resnet50_20', 'resnet50_29', 'resnet152_20'), index=0)
 model = load_model(model_path=model_path) if model_path != '' else None
 
+# After model selection
 if model is not None:
+
+    # Webcam mode
     if run:
+
+        # Get webcam feed
         camera = cv2.VideoCapture(0)
+
+        # Prepare video container
         video = st.image([])
 
         # Process camera imgs
@@ -219,11 +227,20 @@ if model is not None:
             video.image(process_img(model, frame, labels, caption=True))
 
     else:
+
+        # Display example selection
         index = st.number_input('', min_value=0, max_value=852, value=373)
+
+        # Get corresponding image and transform it
         image = cv2.imread(f'dataset/validation/image/maksssksksss{str(index)}.jpg')
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
         left, right = st.columns([3, 1])
+
+        # Draw img on left
         left.image(process_img(model, image, labels, caption=False))
+
+        # Write labels dict and device on right
         right.write({
             'green': 'with_mask',
             'orange': 'mask_weared_incorrect',
