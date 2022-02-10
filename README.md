@@ -19,6 +19,9 @@ with 3 labels:
 
 The dataset contains approximately 2500 hand-collected and hand-labelled images.
 
+[![HuggingFace](https://img.shields.io/badge/%F0%9F%A4%97-Check%20Hugging%20Face%20App-yellow)](https://huggingface.co/spaces/sunwaee/Face-Mask-Detection)
+
+
 __Results:__
 
 Models | mAP | with_mask | without_mask | mask_weared_incorrect | FPS (RTX 3060 Ti + CUDA) |
@@ -26,10 +29,8 @@ Models | mAP | with_mask | without_mask | mask_weared_incorrect | FPS (RTX 3060 
 ResNet50 | 68% | 81% | 67% | 56% | ~20 |
 ResNet152 | 66% | 81% | 65% | 52% | ~12 |
 
-[__Test via Web App here!__](https://share.streamlit.io/dvdnss/facemaskdetection/main/app.py)
 
-
-How good are the models? That good:
+How good are the models? This good:
 <p align="center">
   <img src="https://github.com/DvdNss/FaceMaskDetection/blob/main/resources/ex_inf.jpeg?raw=true" />
 </p>
